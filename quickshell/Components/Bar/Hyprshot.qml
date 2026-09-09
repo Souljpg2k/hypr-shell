@@ -14,9 +14,9 @@ StyledItem {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: (mouse) => {
             if (mouse.button === Qt.LeftButton) {
-                Quickshell.execDetached(["sh", "-c", "hyprshot -m region -o $HOME/Screenshots"])
+                Quickshell.execDetached(["sh", "-c", "hyprshot -m region -o $HOME/Pictures/Screenshots"])
             } else {
-                Quickshell.execDetached(["sh", "-c", "hyprshot -m window -o $HOME/Screenshots"])
+                Quickshell.execDetached(["sh", "-c", "hyprshot -m window -o $HOME/Pictures/Screenshots"])
             }
         }
     }

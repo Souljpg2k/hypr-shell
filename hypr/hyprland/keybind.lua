@@ -29,9 +29,9 @@ hl.bind("SUPER + X", hl.dsp.exec_cmd("cliphist wipe"))
 hl.bind("SUPER + A", hl.dsp.exec_cmd("hyprpicker -a"))
 
 --Hyprshot
-hl.bind("SUPER + F", hl.dsp.exec_cmd("hyprshot -m region -o $HOME/Screenshots"))
-hl.bind("SUPER + G", hl.dsp.exec_cmd("hyprshot -m window -o $HOME/Screenshots"))
-hl.bind("SUPER + H", hl.dsp.exec_cmd("hyprshot -m output -o $HOME/Screenshots"))
+hl.bind("SUPER + F", hl.dsp.exec_cmd("hyprshot -m region -o $HOME/Pictures/Screenshots"))
+hl.bind("SUPER + G", hl.dsp.exec_cmd("hyprshot -m window -o $HOME/Pictures/Screenshots"))
+hl.bind("SUPER + H", hl.dsp.exec_cmd("hyprshot -m output -o $HOME/Pictures/Screenshots"))
 
 -- Quickshell
 hl.bind("SUPER + W", hl.dsp.global("quickshell:wallpaper"))

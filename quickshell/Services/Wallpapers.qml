@@ -9,7 +9,7 @@ Singleton {
     id: root
 
     property string home: Quickshell.env("HOME")
-    property string wallpaperDir: home + "/Wallpapers"
+    property string wallpaperDir: home + "/Pictures/Wallpapers"
     property string wallpaperPath: ""
     property alias darkMode: stateAdapter.darkMode
     property alias wallpapers: wallpaperModel
