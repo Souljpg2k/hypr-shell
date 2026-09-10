@@ -41,6 +41,7 @@ hl.bind("SUPER + Y", hl.dsp.global("quickshell:sys"))
 hl.bind("SUPER + U", hl.dsp.global("quickshell:user"))
 hl.bind("SUPER + P", hl.dsp.global("quickshell:power"))
 hl.bind("SUPER + SHIFT + T", hl.dsp.global("quickshell:darkmode"))
+hl.bind("SUPER + K", hl.dsp.global("quickshell:mediaControls"))
 
 
 -- Move focus with SUPER + arrow keys
