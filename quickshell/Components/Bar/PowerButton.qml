@@ -6,7 +6,11 @@ import Quickshell
 StyledItem {
     MaterialIcon {
         anchors.centerIn: parent
-        text: "bolt"
+        text: "power_settings_new"
+        font {
+            bold: true
+            pixelSize: 15
+        }
     }
 
     MouseArea {

@@ -2,49 +2,55 @@ import qs.Components
 import QtQuick
 import QtQuick.Effects
 
-Canvas {
+Item {
     anchors.fill: parent
     layer.enabled: true
     layer.effect: MultiEffect {
         shadowEnabled: true
         shadowColor: Colors.shadow
-        shadowOpacity: 0.4
-        shadowBlur: 0.2
+        shadowBlur: 0.3
     }
 
-    onPaint: {
-        const ctx = getContext("2d");
+    Canvas {
+        id: canvas
+        width: 145
+        height: 145
+        anchors.centerIn: parent
 
-        ctx.reset();
+        onPaint: {
+            const ctx = getContext("2d");
 
-        const cx = width / 2;
-        const cy = height / 2;
-        const petals = 8;
-        const baseRadius = 70;
-        const waveRadius = 5;
+            ctx.reset();
 
-        ctx.beginPath();
+            const cx = width / 2;
+            const cy = height / 2;
+            const petals = 8;
+            const baseRadius = 66;
+            const waveRadius = 5;
 
-        for (let i = 0; i <= 360; i++) {
-            const t = i * Math.PI / 180;
-            const r = baseRadius + waveRadius * Math.sin(t * petals);
-            const x = cx + Math.cos(t) * r;
-            const y = cy + Math.sin(t) * r;
-            if (i === 0)
-                ctx.moveTo(x, y);
-            else
-                ctx.lineTo(x, y);
+            ctx.beginPath();
+
+            for (let i = 0; i <= 360; i++) {
+                const t = i * Math.PI / 180;
+                const r = baseRadius + waveRadius * Math.sin(t * petals);
+                const x = cx + Math.cos(t) * r;
+                const y = cy + Math.sin(t) * r;
+                if (i === 0)
+                    ctx.moveTo(x, y);
+                else
+                    ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fillStyle = Colors.bg;
+            ctx.fill();
         }
-        ctx.closePath();
-        ctx.fillStyle = Colors.bg;
-        ctx.fill();
-    }
 
-    RotationAnimation on rotation {
-        from: 0
-        to: 360
-        duration: 20000
-        loops: Animation.Infinite
-        running: true
+        RotationAnimation on rotation {
+            from: 0
+            to: 360
+            duration: 20000
+            loops: Animation.Infinite
+            running: true
+        }
     }
 }

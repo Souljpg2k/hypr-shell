@@ -5,7 +5,6 @@ import QtQuick
 
 Item {
     id: root
-
     implicitWidth: 150
     implicitHeight: 150
     
@@ -18,7 +17,7 @@ Item {
             required property int index
             readonly property string number: ["12", "3", "6", "9"][index]
             readonly property real angle: index * 90 - 90
-            readonly property real radius: parent.width / 2 - 35
+            readonly property real radius: parent.width / 2 - 38
 
             text: number
             color: Colors.on_bg
@@ -36,11 +35,10 @@ Item {
         id: hourL
         width: 38
         height: 36
-
         anchors {
             left: parent.left
             top: parent.top
-            leftMargin: 11
+            leftMargin: 8
             topMargin: 8
         }
 
@@ -65,7 +63,6 @@ Item {
         radius: height / 2
         color: Colors.sf
         rotation: 145
-
         anchors {
             right: parent.right
             bottom: parent.bottom
@@ -93,7 +90,6 @@ Item {
         color: Colors.tertiary
         x: (parent.width - width) / 2
         y: parent.height / 2 - height + 14
-
         transform: Rotation {
             origin.x: seconds.width / 2
             origin.y: seconds.height - 14
@@ -104,12 +100,11 @@ Item {
     Rectangle {
         id: minutes
         width: 7
-        height: 62
+        height: 55
         radius: width / 2
         color: Colors.sf
         x: (parent.width - width) / 2
         y: parent.height / 2 - height + 5
-        
         transform: Rotation {
             origin.x: minutes.width / 2
             origin.y: minutes.height - 5
@@ -125,7 +120,6 @@ Item {
         color: Colors.sf
         x: (parent.width - width) / 2
         y: parent.height / 2 - height + 5
-        
         transform: Rotation {
             origin.x: hours.width / 2
             origin.y: hours.height - 5

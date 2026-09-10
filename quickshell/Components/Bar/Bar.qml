@@ -10,7 +10,7 @@ PanelWindow {
         left: true
         right: true
     }
-    implicitHeight: 35
+    implicitHeight: 40
     color: Colors.bg
 
     property int h: 30
@@ -83,7 +83,7 @@ PanelWindow {
                     }
                 }
                 DateTime {}
-                SysButton {}
+                PowerButton {}
             }
         }
     }
