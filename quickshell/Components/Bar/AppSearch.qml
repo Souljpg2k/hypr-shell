@@ -3,14 +3,12 @@ import qs.Components
 import QtQuick
 import Quickshell
 
-Item {
-    width: 24
-    height: 24
-
-    StyledText {
+StyledItem {
+    Text {
         anchors.centerIn: parent
         text: ""
         font.pixelSize: Appearance.base + 6
+        color: Colors.pf
     }
 
     MouseArea {
