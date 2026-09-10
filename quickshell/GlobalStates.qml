@@ -10,16 +10,27 @@ Singleton {
     property bool powerMenuClosing: false
     property bool wallpaperPickerVisible: false
     property bool userWidgetsVisible: false
-    property bool sysWidgetsVisible: false
-
-    property bool clockVisible: true
-    property bool clockClosing: false
-    property bool clockHiddenByPowerMenu: false
-    property bool clockHiddenByWallpaperPicker: false
 
     signal wallpaperCloseRequested
     signal userWidgetsCloseRequested
     signal sysWidgetsCloseRequested
+
+    PersistentProperties {
+        id: persist
+        reloadableId: "globalStatesPersist"
+
+        property bool sysWidgetsVisible: false
+        property bool clockVisible: false
+        property bool clockClosing: false
+        property bool clockHiddenByPowerMenu: false
+        property bool clockHiddenByWallpaperPicker: false
+    }
+
+    property alias sysWidgetsVisible: persist.sysWidgetsVisible
+    property alias clockVisible: persist.clockVisible
+    property alias clockClosing: persist.clockClosing
+    property alias clockHiddenByPowerMenu: persist.clockHiddenByPowerMenu
+    property alias clockHiddenByWallpaperPicker: persist.clockHiddenByWallpaperPicker
 
     function showClock() {
         clockVisible = true;

@@ -54,13 +54,13 @@ PanelWindow {
         Rectangle {
             id: box
             width: 580
-            height: 310
+            height: 300
             radius: Appearance.radius
             color: Colors.bg
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
-                bottomMargin: 18
+                bottomMargin: 10
             }
 
             GridView {

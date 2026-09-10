@@ -15,9 +15,9 @@ StyledItem {
         cursorShape: Qt.PointingHandCursor
         onClicked: mouse => {
             if (mouse.button === Qt.RightButton)
-                GlobalStates.togglePowerMenu();
-            else
                 GlobalStates.toggleSysWidgets();
+            else
+                GlobalStates.togglePowerMenu();
         }
     }
 }
