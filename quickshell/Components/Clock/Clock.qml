@@ -33,8 +33,8 @@ Item {
 
     Pentagon {
         id: hourL
-        width: 38
-        height: 36
+        width: 34
+        height: 32
         anchors {
             left: parent.left
             top: parent.top

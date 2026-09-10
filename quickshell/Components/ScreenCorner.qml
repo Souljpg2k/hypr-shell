@@ -1,6 +1,7 @@
 import qs.Appearance
 import QtQuick
 import QtQuick.Shapes
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 
@@ -8,10 +9,42 @@ Instantiator {
     id: cornerInstantiator
 
     readonly property var cornerPlacements: [
-        { pos: "TopLeft", gap: false }, { pos: "TopLeft", gap: true },
-        { pos: "TopRight", gap: false }, { pos: "TopRight", gap: true },
-        { pos: "BottomLeft", gap: false },
-        { pos: "BottomRight", gap: false },
+        {
+            pos: "TopLeft",
+            gap: false,
+            topMargin: -7,
+            shadow: true
+        },
+        {
+            pos: "TopLeft",
+            gap: true,
+            topMargin: 0,
+            shadow: false
+        },
+        {
+            pos: "TopRight",
+            gap: false,
+            topMargin: -7,
+            shadow: true
+        },
+        {
+            pos: "TopRight",
+            gap: true,
+            topMargin: 0,
+            shadow: false
+        },
+        {
+            pos: "BottomLeft",
+            gap: false,
+            topMargin: 0,
+            shadow: true
+        },
+        {
+            pos: "BottomRight",
+            gap: false,
+            topMargin: 0,
+            shadow: true
+        }
     ]
 
     model: cornerPlacements
@@ -23,6 +56,9 @@ Instantiator {
 
         readonly property string placement: modelData.pos
         readonly property bool fillsBarGap: modelData.gap
+        readonly property int topMargin: modelData.topMargin
+        readonly property bool shadowEnabled: modelData.shadow
+
         property color surfaceColor: Colors.bg
 
         readonly property int cornerSize: 26
@@ -37,21 +73,33 @@ Instantiator {
             right: !anchorsLeft
         }
 
+        margins.top: root.topMargin
+
         color: "transparent"
         implicitWidth: cornerSize
         implicitHeight: cornerSize
-        exclusionMode: fillsBarGap ? ExclusionMode.Ignore : ExclusionMode.Auto
+
+        exclusionMode: fillsBarGap
+            ? ExclusionMode.Ignore
+            : ExclusionMode.Auto
+
         WlrLayershell.layer: WlrLayer.Top
 
         Shape {
             width: root.cornerSize
             height: root.cornerSize
+
             layer.enabled: true
             layer.samples: 4
+            layer.effect: MultiEffect {
+                shadowEnabled: root.shadowEnabled
+                shadowColor: Colors.shadow
+            }
 
             ShapePath {
                 fillColor: root.fillColor
                 strokeColor: "transparent"
+
                 startX: root.anchorsLeft ? 0 : root.cornerSize
                 startY: root.anchorsBottom ? root.cornerSize : 0
 

@@ -10,80 +10,92 @@ PanelWindow {
         left: true
         right: true
     }
-    implicitHeight: 40
-    color: Colors.bg
+    implicitHeight: 45
+    color: "transparent"
 
-    property int h: 30
+    readonly property int h: 30
+    readonly property int bh: 38
 
-    RowLayout {
-        anchors {
-            left: parent.left
-            leftMargin: 20
-            verticalCenter: parent.verticalCenter
-        }
-
-        Item {
-            width: 260
-            height: bar.h
-
-            RowLayout {
-                anchors.fill: parent
-                spacing: 7
-
-                AppSearch {
-                    Layout.leftMargin: 3
-                }
-                ActiveWindow {}
-                MediaPlayer {}
-            }
-        }
+    StyledShadow {
+        width: parent.width -10
+        height: 30
     }
 
-    Item {
-        anchors.centerIn: parent
-        width: 390
-        height: bar.h
+    Rectangle {
+        width: parent.width
+        height: bar.bh
+        color: Colors.bg
 
         RowLayout {
-            anchors.centerIn: parent
-            spacing: -2
+            anchors {
+                left: parent.left
+                leftMargin: 20
+                verticalCenter: parent.verticalCenter
+            }
 
-            UserName {}
-            Workspaces {}
-            HyprlandXkb {}
-        }
-    }
+            Item {
+                width: 260
+                height: bar.h
 
-    RowLayout {
-        anchors {
-            right: parent.right
-            rightMargin: 15
-            verticalCenter: parent.verticalCenter
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: 7
+
+                    AppSearch {
+                        Layout.leftMargin: 3
+                    }
+                    ActiveWindow {}
+                    MediaPlayer {}
+                }
+            }
         }
 
         Item {
-            width: 280
+            anchors.centerIn: parent
+            width: 390
             height: bar.h
 
             RowLayout {
-                anchors.fill: parent
-                spacing: -24
+                anchors.centerIn: parent
+                spacing: -2
 
-                Item {
-                    width: 100
-                    height: 24
+                UserName {}
+                Workspaces {}
+                HyprlandXkb {}
+            }
+        }
 
-                    RowLayout {
-                        anchors.centerIn: parent
-                        spacing: -8
+        RowLayout {
+            anchors {
+                right: parent.right
+                rightMargin: 15
+                verticalCenter: parent.verticalCenter
+            }
 
-                        Hyprshot {}
-                        HyprPicker {}
-                        DarkModeBtn {}
+            Item {
+                width: 280
+                height: bar.h
+
+                RowLayout {
+                    anchors.fill: parent
+                    spacing: -24
+
+                    Item {
+                        width: 100
+                        height: 24
+
+                        RowLayout {
+                            anchors.centerIn: parent
+                            spacing: -8
+
+                            Hyprshot {}
+                            HyprPicker {}
+                            DarkModeBtn {}
+                        }
                     }
+                    DateTime {}
+                    PowerButton {}
                 }
-                DateTime {}
-                PowerButton {}
             }
         }
     }
