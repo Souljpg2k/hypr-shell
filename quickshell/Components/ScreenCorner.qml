@@ -72,17 +72,11 @@ Instantiator {
             left: anchorsLeft
             right: !anchorsLeft
         }
-
         margins.top: root.topMargin
-
         color: "transparent"
         implicitWidth: cornerSize
         implicitHeight: cornerSize
-
-        exclusionMode: fillsBarGap
-            ? ExclusionMode.Ignore
-            : ExclusionMode.Auto
-
+        exclusionMode: fillsBarGap ? ExclusionMode.Ignore : ExclusionMode.Auto
         WlrLayershell.layer: WlrLayer.Top
 
         Shape {
@@ -99,7 +93,6 @@ Instantiator {
             ShapePath {
                 fillColor: root.fillColor
                 strokeColor: "transparent"
-
                 startX: root.anchorsLeft ? 0 : root.cornerSize
                 startY: root.anchorsBottom ? root.cornerSize : 0
 
