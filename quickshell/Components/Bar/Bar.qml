@@ -73,7 +73,7 @@ PanelWindow {
             }
 
             Item {
-                width: 280
+                width: 290
                 height: bar.h
 
                 RowLayout {
@@ -90,6 +90,7 @@ PanelWindow {
 
                             Hyprshot {}
                             HyprPicker {}
+                            WallButton {}
                             DarkModeBtn {}
                         }
                     }
