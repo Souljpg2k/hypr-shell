@@ -14,6 +14,7 @@ Singleton {
     signal wallpaperCloseRequested
     signal userWidgetsCloseRequested
     signal sysWidgetsCloseRequested
+    signal mediaControlsCloseRequested
 
     PersistentProperties {
         id: persist
@@ -24,6 +25,8 @@ Singleton {
         property bool clockClosing: false
         property bool clockHiddenByPowerMenu: false
         property bool clockHiddenByWallpaperPicker: false
+        property bool mediaControlsVisible: false
+        property bool mediaControlsWlrLayer: false
     }
 
     property alias sysWidgetsVisible: persist.sysWidgetsVisible
@@ -31,6 +34,8 @@ Singleton {
     property alias clockClosing: persist.clockClosing
     property alias clockHiddenByPowerMenu: persist.clockHiddenByPowerMenu
     property alias clockHiddenByWallpaperPicker: persist.clockHiddenByWallpaperPicker
+    property alias mediaControlsVisible: persist.mediaControlsVisible
+    property alias mediaControlsWlrLayer: persist.mediaControlsWlrLayer
 
     function showClock() {
         clockVisible = true;
@@ -108,5 +113,12 @@ Singleton {
             userWidgetsCloseRequested();
         else
             userWidgetsVisible = true;
+    }
+
+    function toggleMediaControls() {
+        if (mediaControlsVisible)
+            mediaControlsCloseRequested();
+        else
+            mediaControlsVisible = true;
     }
 }

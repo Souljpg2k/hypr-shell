@@ -1,3 +1,4 @@
+import qs
 import qs.Appearance
 import qs.Components
 import qs.Components.Cava
@@ -11,7 +12,7 @@ Rectangle {
     height: 24
     radius: Appearance.radius
     color: "transparent"
-    
+
     ClippingRectangle {
         anchors.fill: parent
         radius: Appearance.radius
@@ -24,12 +25,7 @@ Rectangle {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-        onClicked: mouse => {
-            if (mouse.button === Qt.LeftButton)
-                MprisService.previous();
-            else if (mouse.button === Qt.RightButton)
-                MprisService.next();
-        }
+        onClicked: GlobalStates.toggleMediaControls()
         onWheel: wheel => {
             if (wheel.angleDelta.y > 0)
                 AudioService.volumeUp();
@@ -58,7 +54,12 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: MprisService.togglePlaying()
+                onClicked: {
+                    if (GlobalStates.mediaControlsWlrLayer)
+                        GlobalStates.mediaControlsWlrLayer = false;
+                    else
+                        GlobalStates.mediaControlsWlrLayer = true;
+                }
             }
         }
 

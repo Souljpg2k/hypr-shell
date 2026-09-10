@@ -170,7 +170,6 @@ PanelWindow {
     Animations {
         id: animation
         target: content
-
         onExited: {
             GlobalStates.powerMenuVisible = false;
             GlobalStates.powerMenuClosing = false;

@@ -16,15 +16,12 @@ PanelWindow {
         right: true
         top: true
     }
-
     implicitWidth: 110
     implicitHeight: 350
-
     margins {
         top: 10
         right: 8
     }
-
     color: "transparent"
     WlrLayershell.layer: WlrLayer.Bottom
 
@@ -53,13 +50,10 @@ PanelWindow {
     Animations {
         id: animation
         target: content
-
         enterX: 50
         enterY: 0
-
-        exitX: 100
+        exitX: 50
         exitY: 0
-
         onExited: GlobalStates.sysWidgetsVisible = false
     }
 

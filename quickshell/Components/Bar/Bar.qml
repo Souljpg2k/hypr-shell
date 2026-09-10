@@ -17,7 +17,7 @@ PanelWindow {
     readonly property int bh: 38
 
     StyledShadow {
-        width: parent.width -10
+        width: parent.width - 10
         height: 30
     }
 

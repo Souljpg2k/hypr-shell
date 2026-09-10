@@ -18,7 +18,6 @@ PanelWindow {
         right: true
         bottom: true
     }
-
     implicitWidth: 600
     implicitHeight: 320
     exclusiveZone: 0
@@ -208,15 +207,14 @@ PanelWindow {
     Animations {
         id: animation
         target: panel
-
         enterX: 0
         enterY: 100
-
         exitX: 0
         exitY: 100
-
         onExited: GlobalStates.wallpaperPickerVisible = false
     }
+    
+    Component.onCompleted: animation.startEnter()
 
     Connections {
         target: GlobalStates
@@ -225,6 +223,4 @@ PanelWindow {
             root.close();
         }
     }
-
-    Component.onCompleted: animation.startEnter()
 }

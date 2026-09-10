@@ -40,4 +40,9 @@ Scope {
         description: "DarkMode"
         onPressed: Wallpapers.toggleDarkMode()
     }
+    GlobalShortcut {
+        name: "mediaControls"
+        description: "mediaControls"
+        onPressed: GlobalStates.toggleMediaControls()
+    }
 }

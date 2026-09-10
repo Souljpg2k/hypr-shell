@@ -45,20 +45,16 @@ Singleton {
     Process {
         id: wallpaperQuery
         command: ["awww", "query"]
-
         stdout: StdioCollector {
             onStreamFinished: {
                 const lines = text.trim().split("\n")
-
                 for (const line of lines) {
                     const index = line.indexOf("image:")
                     if (index < 0)
                         continue
-
                     const currentPath = line.slice(index + 6).trim()
                     if (!currentPath)
                         continue
-
                     root.wallpaperPath = filePath(currentPath)
                     colorUpdateTimer.restart()
                     break
@@ -69,17 +65,15 @@ Singleton {
 
     function filePath(path) {
         const value = String(path)
-
         if (value.startsWith("file://"))
             return decodeURIComponent(value.replace("file://", ""))
-
         return value
     }
 
     function updateColors() {
         if (!wallpaperPath)
             return
-
+        
         Quickshell.execDetached([
             "matugen",
             "image",
@@ -93,10 +87,9 @@ Singleton {
     function apply(p) {
         if (!p)
             return
-
         const path = filePath(p)
+        
         wallpaperPath = path
-
         Quickshell.execDetached([
             "awww",
             "img",
@@ -105,7 +98,6 @@ Singleton {
             "--transition-fps", "60",
             "--transition-duration", "2"
         ])
-
         colorUpdateTimer.restart()
     }
 

@@ -54,7 +54,7 @@ PanelWindow {
             anchors {
                 top: parent.top
                 horizontalCenter: parent.horizontalCenter
-                topMargin: 15
+                topMargin: 10
             }
             width: 180
             height: 110
@@ -179,16 +179,13 @@ PanelWindow {
     Animations {
         id: animation
         target: content
-
         enterX: 0
-        enterY: -50
-
+        enterY: -10
         exitX: 0
         exitY: -24
-
         onExited: GlobalStates.userWidgetsVisible = false
     }
-
+    
     Component.onCompleted: animation.startEnter()
 
     Connections {

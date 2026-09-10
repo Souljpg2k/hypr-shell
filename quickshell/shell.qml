@@ -32,6 +32,10 @@ ShellRoot {
         active: GlobalStates.wallpaperPickerVisible
         component: WallpaperPicker {}
     }
+    LazyLoader {
+        active: GlobalStates.mediaControlsVisible
+        component: MediaControls {}
+    }
 
     LockContext {
         id: lockContext

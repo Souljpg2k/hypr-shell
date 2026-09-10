@@ -24,13 +24,11 @@ PanelWindow {
     Animations {
         id: animation
         target: clock
-
         enterRotation: -45
         exitRotation: 145
-
         onExited: GlobalStates.clockClosing = false
     }
-
+ 
     Component.onCompleted: animation.startEnter()
 
     Connections {
