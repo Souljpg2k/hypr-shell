@@ -50,6 +50,12 @@ hl.window_rule({
 })
 
 hl.window_rule({
+	match = { class = "org.kde.dolphin" },
+	float = true,
+	animation = "slide bottom",
+})
+
+hl.window_rule({
 	match = { class = "org.gnome.Loupe" },
 	float = true,
 	animation = "slide bottom",
