@@ -12,12 +12,7 @@ PanelWindow {
 
     property bool closing: false
 
-    anchors {
-        top: true
-        left: true
-        right: true
-        bottom: true
-    }
+    anchors.top: true
     implicitWidth: 200
     implicitHeight: 130
     exclusiveZone: 0
@@ -28,11 +23,6 @@ PanelWindow {
             return;
         closing = true;
         animation.startExit();
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: w.requestClose()
     }
 
     Item {
@@ -94,8 +84,8 @@ PanelWindow {
                 }
                 StyledText {
                     text: SystemInfo.uptimeText
-                    font.pixelSize: Appearance.base - 2
-                    opacity: 0.7
+                    font.pixelSize: Appearance.base - 1
+                    opacity: 0.5
                 }
             }
 
@@ -190,6 +180,7 @@ PanelWindow {
 
     Connections {
         target: GlobalStates
+
         function onUserWidgetsCloseRequested() {
             w.requestClose();
         }
