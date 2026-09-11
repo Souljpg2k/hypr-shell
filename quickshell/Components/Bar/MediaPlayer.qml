@@ -56,25 +56,23 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 2
 
-            StyledText {
-                id: a
+            component TextInfo: StyledText {
                 width: 80
-                text: MprisService.activeTrack.artist
                 font.pixelSize: Appearance.base
                 elide: Text.ElideRight
                 leftPadding: 8
+            }
+
+            TextInfo {
+                text: MprisService.activeTrack.artist
             }
 
             StyledText {
                 text: "•"
             }
 
-            StyledText {
-                width: a.width
+            TextInfo {
                 text: MprisService.activeTrack.title
-                font.pixelSize: Appearance.base
-                elide: Text.ElideRight
-                leftPadding: 8
             }
         }
     }

@@ -47,7 +47,7 @@ PanelWindow {
     Connections {
         target: MprisService
 
-        function onPositionChanged() {
+        function onDisplayPositionChanged() {
             root.syncProgress();
         }
 
@@ -63,7 +63,7 @@ PanelWindow {
             root.syncProgress();
         }
     }
-
+    
     Item {
         id: content
         width: parent.width
