@@ -1,6 +1,7 @@
 import qs
 import qs.Appearance
 import qs.Components
+import qs.Components.Cava
 import qs.Services
 import QtQuick
 import Quickshell
@@ -65,7 +66,6 @@ PanelWindow {
 
     Item {
         id: content
-
         width: parent.width
         height: parent.height
         opacity: 0
@@ -80,7 +80,6 @@ PanelWindow {
 
         Rectangle {
             id: b
-
             anchors {
                 top: parent.top
                 horizontalCenter: parent.horizontalCenter
@@ -91,6 +90,14 @@ PanelWindow {
             height: 120
             color: Colors.bg
             radius: Appearance.base + 6
+
+            ClippingRectangle {
+                anchors.fill: parent
+                radius: Appearance.radius
+                color: "transparent"
+
+                Cava {}
+            }
 
             Row {
                 anchors {
@@ -174,7 +181,7 @@ PanelWindow {
                         }
                         StyledText {
                             text: " / "
-                            width: t.width -15
+                            width: t.width - 15
                         }
                         StyledText {
                             text: MprisService.fmt(MprisService.length)
@@ -312,7 +319,7 @@ PanelWindow {
 
                         MaterialIcon {
                             text: "shuffle"
-                            font.pixelSize: c.fs -5
+                            font.pixelSize: c.fs - 5
                             enabled: MprisService.shuffleSupported
                             color: MprisService.shuffleActive ? Colors.pf : Colors.on_bg
                             opacity: enabled ? 1 : 0.35
@@ -366,7 +373,7 @@ PanelWindow {
 
                         MaterialIcon {
                             text: MprisService.loopIcon
-                            font.pixelSize: c.fs -6
+                            font.pixelSize: c.fs - 6
                             enabled: MprisService.loopSupported
                             color: MprisService.loopActive ? Colors.pf : Colors.on_bg
                             opacity: enabled ? 1 : 0.35

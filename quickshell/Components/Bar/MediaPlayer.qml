@@ -11,14 +11,6 @@ Item {
     width: 220
     height: 24
 
-    ClippingRectangle {
-        anchors.fill: parent
-        radius: Appearance.radius
-        color: "transparent"
-
-        Cava {}
-    }
-
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
