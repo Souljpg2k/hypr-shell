@@ -219,8 +219,6 @@ Item {
                                             pixelSize: root.iconSize
                                         }
                                         color: Colors.on_bg
-                                        horizontalAlignment: Text.AlignHCenter
-                                        verticalAlignment: Text.AlignVCenter
                                         opacity: 0
                                         scale: 0
 
