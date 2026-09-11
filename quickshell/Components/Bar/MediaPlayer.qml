@@ -7,11 +7,9 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 
-Rectangle {
+Item {
     width: 220
     height: 24
-    radius: Appearance.radius
-    color: "transparent"
 
     ClippingRectangle {
         anchors.fill: parent
@@ -24,7 +22,6 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: GlobalStates.toggleMediaControls()
         onWheel: wheel => {
             if (wheel.angleDelta.y > 0)
@@ -39,8 +36,8 @@ Rectangle {
         leftPadding: 2
 
         ClippingRectangle {
-            width: 20
-            height: 20
+            width: 22
+            height: 22
             radius: Appearance.radius
             color: Colors.bg
             anchors.verticalCenter: parent.verticalCenter
