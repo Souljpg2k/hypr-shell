@@ -26,7 +26,7 @@ PanelWindow {
         height: bar.bh
         color: Colors.bg
 
-        RowLayout {
+        Row {
             anchors {
                 left: parent.left
                 leftMargin: 20
@@ -65,7 +65,7 @@ PanelWindow {
             }
         }
 
-        RowLayout {
+        Row {
             anchors {
                 right: parent.right
                 rightMargin: 15
@@ -78,10 +78,10 @@ PanelWindow {
 
                 RowLayout {
                     anchors.fill: parent
-                    spacing: -24
+                    spacing: -10
 
                     Item {
-                        width: 100
+                        width: 110
                         height: 24
 
                         RowLayout {
