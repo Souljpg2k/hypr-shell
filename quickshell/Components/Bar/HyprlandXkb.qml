@@ -6,35 +6,26 @@ import Quickshell
 
 Item {
     width: 50
-    height: 24
+    height: 18
 
-    MaterialIcon {
-        anchors {
-            left: parent.left
-            leftMargin: 7
-            verticalCenter: parent.verticalCenter
+    Row {
+        spacing: 4
+    
+        MaterialIcon {
+            text: "keyboard"
+            font.pixelSize: Appearance.base + 3
         }
-        text: "keyboard"
-        font.pixelSize: Appearance.base + 3
-    }
 
-    StyledText {
-        anchors {
-            left: parent.left
-            leftMargin: 24
-            verticalCenter: parent.verticalCenter
+        StyledText {
+            text: LayoutService.currentLayout
+            font.pixelSize: Appearance.base + 1
+            width: 20
         }
-        text: LayoutService.currentLayout
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: Appearance.base
-        width: 20
     }
 
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: {
-            Quickshell.execDetached(["hyprctl", "switchxkblayout", "all", "next"]);
-        }
+        onClicked: Quickshell.execDetached(["hyprctl", "switchxkblayout", "all", "next"]);
     }
 }

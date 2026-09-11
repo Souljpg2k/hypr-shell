@@ -34,13 +34,7 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
         cursorShape: Qt.PointingHandCursor
-        onClicked: mouse => {
-            if (mouse.button === Qt.RightButton)
-                GlobalStates.toggleWallpaperPicker();
-            else
-                GlobalStates.toggleUserWidgets();
-        }
+        onClicked:GlobalStates.toggleUserWidgets();
     }
 }
