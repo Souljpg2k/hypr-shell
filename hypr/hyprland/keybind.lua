@@ -2,7 +2,8 @@ local terminal    = "kitty"
 local terminal2   = "ghostty"
 local fileManager = "dolphin"
 local menu        = "rofi -show drun"
-local browser     = "zen"
+local browser     = "brave"
+local browser2    = "zen"
 
 local closeWindowBind = hl.bind("SUPER + C", hl.dsp.window.close())
 
@@ -18,6 +19,7 @@ hl.bind("SUPER + Return", hl.dsp.exec_cmd(terminal2))
 hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
 hl.bind("SUPER + R", hl.dsp.exec_cmd(menu))
 hl.bind("SUPER + B", hl.dsp.exec_cmd(browser))
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd(browser2))
 hl.bind("SUPER + SHIFT + C", hl.dsp.exec_cmd("code"))
 
 -- Cliphist
