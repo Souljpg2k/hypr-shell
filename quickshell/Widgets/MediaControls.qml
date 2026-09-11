@@ -113,20 +113,21 @@ PanelWindow {
 
                     StyledText {
                         id: p
-                        width: 145
+                        width: 100
                         text: MprisService.activeTrack.artist
                         elide: Text.ElideRight
                     }
 
                     StyledText {
-                        width: p.width
+                        id: s
+                        width: 145
                         text: MprisService.activeTrack.title
                         elide: Text.ElideRight
                     }
 
                     Rectangle {
                         id: seekBar
-                        width: p.width
+                        width: s.width
                         height: 6
                         radius: 3
                         color: Colors.sf
