@@ -99,10 +99,11 @@ PanelWindow {
                     top: parent.top
                     topMargin: 8
                 }
-                spacing: 5
+                spacing: 3
 
                 MaterialIcon {
                     text: AudioService.muteIcon
+                    font.pixelSize: 16
                     color: AudioService.muted ? Colors.error : Colors.pf
                     topPadding: -3
                 }
@@ -311,10 +312,11 @@ PanelWindow {
 
                         MaterialIcon {
                             text: "shuffle"
-                            font.pixelSize: c.fs
+                            font.pixelSize: c.fs -5
                             enabled: MprisService.shuffleSupported
                             color: MprisService.shuffleActive ? Colors.pf : Colors.on_bg
                             opacity: enabled ? 1 : 0.35
+                            topPadding: 3
 
                             MouseArea {
                                 anchors.fill: parent
@@ -364,10 +366,11 @@ PanelWindow {
 
                         MaterialIcon {
                             text: MprisService.loopIcon
-                            font.pixelSize: c.fs
+                            font.pixelSize: c.fs -6
                             enabled: MprisService.loopSupported
                             color: MprisService.loopActive ? Colors.pf : Colors.on_bg
                             opacity: enabled ? 1 : 0.35
+                            topPadding: 4
 
                             MouseArea {
                                 anchors.fill: parent
