@@ -7,7 +7,24 @@ Item {
     id: root
     implicitWidth: 150
     implicitHeight: 150
-    
+
+    property real secondsAngle: 0
+
+    Timer {
+        interval: 16
+        running: true
+        repeat: true
+        onTriggered: {
+            const now = new Date()
+            root.secondsAngle = (now.getSeconds() + now.getMilliseconds() / 1000) * 6
+        }
+    }
+
+    Component.onCompleted: {
+        const now = new Date()
+        root.secondsAngle = (now.getSeconds() + now.getMilliseconds() / 1000) * 6
+    }
+
     Rosette {}
 
     Repeater {
@@ -83,18 +100,17 @@ Item {
     }
 
     Rectangle {
-        id: seconds
-        width: 3
-        height: 66
+        id: secondsDot
+        width: 8
+        height: 8
         radius: width / 2
         color: Colors.tertiary
-        x: (parent.width - width) / 2
-        y: parent.height / 2 - height + 14
-        transform: Rotation {
-            origin.x: seconds.width / 2
-            origin.y: seconds.height - 14
-            angle: DateTimeService.seconds * 6
-        }
+        x: parent.width / 2
+            + Math.cos((root.secondsAngle - 90) * Math.PI / 180) * 45
+            - width / 2
+        y: parent.height / 2
+            + Math.sin((root.secondsAngle - 90) * Math.PI / 180) * 45
+            - height / 2
     }
 
     Rectangle {
