@@ -10,63 +10,128 @@ Singleton {
     id: root
 
     property MprisPlayer trackedPlayer: null
-    property MprisPlayer activePlayer: {
-        if (trackedPlayer)
-            return trackedPlayer;
-        return Mpris.players.values.length > 0 ? Mpris.players.values[0] : null;
-    }
+    property MprisPlayer activePlayer: trackedPlayer ?? Mpris.players.values[0] ?? null
 
     property var activeTrack: ({
-            uniqueId: 0,
-            artUrl: "",
-            title: "Unknown Title",
-            artist: "Unknown Artist",
-            album: "Unknown Album"
-        })
+        uniqueId: 0,
+        artUrl: "",
+        title: "Unknown Title",
+        artist: "Unknown Artist",
+        album: "Unknown Album"
+    })
 
-    property real position: root.activePlayer?.position ?? 0
-    property real length: root.activePlayer?.length ?? 0
-    property real progress: {
-        if (root.length <= 0)
-            return 0;
-        return Math.max(0, Math.min(1, root.position / root.length));
+    property real displayPosition: 0
+    property real positionAnchor: 0
+    property double positionAnchorTime: Date.now()
+    property bool seeking: false
+    property real seekTarget: 0
+
+    property real length: activePlayer?.length ?? 0
+    property real progress: length > 0
+        ? Math.max(0, Math.min(1, displayPosition / length))
+        : 0
+    property bool shuffleSupported: activePlayer
+        ? activePlayer.shuffleSupported && activePlayer.canControl
+        : false
+    property bool shuffleActive: activePlayer?.shuffle ?? false
+
+    property bool loopSupported: activePlayer
+        ? activePlayer.loopSupported && activePlayer.canControl
+        : false
+    property var loopState: activePlayer?.loopState ?? MprisLoopState.None
+    property bool loopActive: loopState !== MprisLoopState.None
+    property string loopIcon: loopState === MprisLoopState.Track
+        ? "repeat_one"
+        : "repeat"
+
+    property bool canTogglePlaying: activePlayer?.canTogglePlaying ?? false
+    property bool canGoPrevious: activePlayer?.canGoPrevious ?? false
+    property bool canGoNext: activePlayer?.canGoNext ?? false
+    property bool isPlaying: activePlayer?.isPlaying ?? false
+
+    function setPositionAnchor(value) {
+        const position = Math.max(0, Math.min(length, value))
+
+        positionAnchor = position
+        positionAnchorTime = Date.now()
+        displayPosition = position
     }
 
-    property bool loopSupported: root.activePlayer ? root.activePlayer.loopSupported && root.activePlayer.canControl : false
-    property var loopState: root.activePlayer?.loopState ?? MprisLoopState.None
-    property bool loopActive: root.loopState !== MprisLoopState.None
-    property string loopIcon: {
-        if (root.loopState === MprisLoopState.Track)
-            return "repeat_one";
-        return "repeat";
-    }
-
-    function toggleLoop() {
-        const player = root.activePlayer;
-
-        if (!player || !root.loopSupported)
-            return;
-        if (player.loopState === MprisLoopState.None)
-            player.loopState = MprisLoopState.Track;
-        else if (player.loopState === MprisLoopState.Track)
-            player.loopState = MprisLoopState.Playlist;
-        else
-            player.loopState = MprisLoopState.None;
+    function syncPosition() {
+        if (activePlayer)
+            setPositionAnchor(activePlayer.position)
     }
 
     function seekTo(value) {
-        const player = root.activePlayer;
-        if (!player || !player.canSeek)
-            return;
-        player.position = Math.max(0, Math.min(root.length, value));
+        const player = activePlayer
+
+        if (!player?.canSeek)
+            return
+
+        const target = Math.max(0, Math.min(length, value))
+
+        seeking = true
+        seekTarget = target
+        setPositionAnchor(target)
+
+        player.position = target
     }
 
     function seekPercent(percent) {
-        root.seekTo(root.length * Math.max(0, Math.min(1, percent)));
+        seekTo(length * Math.max(0, Math.min(1, percent)))
     }
 
-    function firstPlayer() {
-        return Mpris.players.values.length > 0 ? Mpris.players.values[0] : null;
+    function toggleShuffle() {
+        if (shuffleSupported)
+            activePlayer.shuffle = !activePlayer.shuffle
+    }
+
+    function toggleLoop() {
+        if (!loopSupported)
+            return
+
+        if (loopState === MprisLoopState.None)
+            activePlayer.loopState = MprisLoopState.Track
+        else if (loopState === MprisLoopState.Track)
+            activePlayer.loopState = MprisLoopState.Playlist
+        else
+            activePlayer.loopState = MprisLoopState.None
+    }
+
+    function togglePlaying() {
+        if (canTogglePlaying)
+            activePlayer.togglePlaying()
+    }
+
+    function previous() {
+        if (canGoPrevious)
+            activePlayer.previous()
+    }
+
+    function next() {
+        if (canGoNext)
+            activePlayer.next()
+    }
+
+    function updateTrack() {
+        const player = activePlayer
+
+        activeTrack = {
+            uniqueId: player?.uniqueId ?? 0,
+            artUrl: player?.trackArtUrl ?? "",
+            title: player?.trackTitle || "Unknown Title",
+            artist: player?.trackArtist || "Unknown Artist",
+            album: player?.trackAlbum || "Unknown Album"
+        }
+    }
+
+    function fmt(seconds) {
+        if (!Number.isFinite(seconds) || seconds <= 0)
+            return "0:00"
+        const value = Math.floor(seconds)
+        return Math.floor(value / 60)
+            + ":"
+            + String(value % 60).padStart(2, "0")
     }
 
     Instantiator {
@@ -75,26 +140,55 @@ Singleton {
         Connections {
             required property MprisPlayer modelData
             target: modelData
+
             Component.onCompleted: {
                 if (root.trackedPlayer === null || modelData.isPlaying)
-                    root.trackedPlayer = modelData;
+                    root.trackedPlayer = modelData
             }
+
             Component.onDestruction: {
                 if (root.trackedPlayer !== modelData)
-                    return;
-                root.trackedPlayer = null;
+                    return
+                root.trackedPlayer = null
                 for (const player of Mpris.players.values) {
                     if (player.isPlaying) {
-                        root.trackedPlayer = player;
-                        return;
+                        root.trackedPlayer = player
+                        return
                     }
                 }
-                root.trackedPlayer = root.firstPlayer();
+
+                root.trackedPlayer = Mpris.players.values[0] ?? null
             }
 
             function onPlaybackStateChanged() {
-                if (modelData.isPlaying)
-                    root.trackedPlayer = modelData;
+                if (modelData.isPlaying) {
+                    root.trackedPlayer = modelData
+                    return
+                }
+
+                if (modelData === root.activePlayer) {
+                    root.seeking = false
+                    root.setPositionAnchor(modelData.position)
+                }
+            }
+
+            function onPositionChanged() {
+                if (modelData !== root.activePlayer)
+                    return
+                if (root.seeking) {
+                    if (Math.abs(modelData.position - root.seekTarget) < 1) {
+                        root.seeking = false
+                        root.setPositionAnchor(modelData.position)
+                    }
+                    return
+                }
+
+                root.setPositionAnchor(modelData.position)
+            }
+
+            function onLengthChanged() {
+                if (modelData === root.activePlayer)
+                    root.syncPosition()
             }
         }
     }
@@ -103,62 +197,41 @@ Singleton {
         target: root.activePlayer
 
         function onPostTrackChanged() {
-            root.updateTrack();
+            root.seeking = false
+            root.updateTrack()
+            root.syncPosition()
         }
-        
+
         function onTrackArtUrlChanged() {
-            root.updateTrack();
+            root.updateTrack()
         }
     }
 
-    onActivePlayerChanged: root.updateTrack()
-
-    function updateTrack() {
-        const player = root.activePlayer;
-
-        root.activeTrack = {
-            uniqueId: player?.uniqueId ?? 0,
-            artUrl: player?.trackArtUrl ?? "",
-            title: player?.trackTitle || "Unknown Title",
-            artist: player?.trackArtist || "Unknown Artist",
-            album: player?.trackAlbum || "Unknown Album"
-        };
+    onActivePlayerChanged: {
+        root.seeking = false
+        root.updateTrack()
+        root.syncPosition()
     }
 
-    property bool canTogglePlaying: root.activePlayer?.canTogglePlaying ?? false
-    property bool canGoPrevious: root.activePlayer?.canGoPrevious ?? false
-    property bool canGoNext: root.activePlayer?.canGoNext ?? false
-    property bool isPlaying: root.activePlayer?.isPlaying ?? false
-
-    function togglePlaying() {
-        if (root.canTogglePlaying)
-            root.activePlayer.togglePlaying();
+    Component.onCompleted: {
+        Qt.callLater(() => {
+            root.updateTrack()
+            root.syncPosition()
+        })
     }
 
-    function previous() {
-        if (root.canGoPrevious)
-            root.activePlayer.previous();
-    }
+    FrameAnimation {
+        running: root.isPlaying && root.length > 0
 
-    function next() {
-        if (root.canGoNext)
-            root.activePlayer.next();
-    }
-
-    function fmt(s) {
-        if (!Number.isFinite(s) || s <= 0)
-            return "0:00";
-        const t = Math.floor(s);
-        return Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0");
-    }
-
-    Timer {
-        interval: 1000
-        running: root.isPlaying && (root.activePlayer?.positionSupported ?? false)
-        repeat: true
         onTriggered: {
-            if (root.activePlayer)
-                root.activePlayer.positionChanged();
+            root.displayPosition = Math.max(
+                0,
+                Math.min(
+                    root.length,
+                    root.positionAnchor
+                        + (Date.now() - root.positionAnchorTime) / 1000
+                )
+            )
         }
     }
 }
