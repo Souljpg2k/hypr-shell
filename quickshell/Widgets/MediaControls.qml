@@ -283,6 +283,7 @@ PanelWindow {
                         MouseArea {
                             anchors.fill: parent
                             z: 10
+                            enabled: MprisService.activePlayer !== null
                             cursorShape: Qt.PointingHandCursor
 
                             onPressed: mouse => {
