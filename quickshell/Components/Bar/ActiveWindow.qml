@@ -1,4 +1,3 @@
-import qs.Services
 import qs.Appearance
 import qs.Components
 import QtQuick

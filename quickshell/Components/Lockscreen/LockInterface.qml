@@ -133,8 +133,6 @@ Item {
 
             TextField {
                 id: passwordBox
-                width: 0
-                height: 0
                 visible: false
                 focus: true
                 enabled: !root.context.unlockInProgress
@@ -249,7 +247,9 @@ Item {
                     Rectangle {
                         id: cursor
                         anchors.verticalCenter: parent.verticalCenter
-                        x: Math.min(dotsRow.implicitWidth + 2 - dotsFlickable.contentX, parent.width - width - 2)
+                        x: Math.min(
+                            dotsRow.implicitWidth + 2 - dotsFlickable.contentX, parent.width - width - 2
+                        )
                         width: 2
                         height: 16
                         color: Colors.primary
