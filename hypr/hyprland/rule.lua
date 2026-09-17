@@ -52,7 +52,6 @@ hl.window_rule({
 hl.window_rule({
 	match = { class = "org.kde.dolphin" },
 	float = true,
-	pin = true,
 	animation = "slide bottom",
 })
 
