@@ -29,13 +29,13 @@ Item {
 
     function syncDots(length: int): void {
         while (dotModel.count > length)
-            dotModel.remove(dotModel.count - 1);
+            dotModel.remove(dotModel.count - 1)
 
         while (dotModel.count < length) {
-            const icon = iconPool[Math.floor(Math.random() * iconPool.length)];
+            const icon = iconPool[Math.floor(Math.random() * iconPool.length)]
             dotModel.append({
                 "icon": icon
-            });
+            })
         }
     }
 
@@ -70,8 +70,8 @@ Item {
         Connections {
             target: root.context
             function onFlashMsg() {
-                errorText.opacity = 1;
-                fadeOut.restart();
+                errorText.opacity = 1
+                fadeOut.restart()
             }
         }
 
@@ -108,15 +108,19 @@ Item {
                 MaterialIcon {
                     text: "account_circle"
                 }
+
                 StyledText {
                     text: SystemInfo.username ?? "user"
                 }
+
                 Item {
                     Layout.fillWidth: true
                 }
+
                 MaterialIcon {
                     text: "keyboard"
                 }
+
                 StyledText {
                     text: LayoutService.currentLayout
                     Layout.fillWidth: true
@@ -139,8 +143,8 @@ Item {
                 echoMode: TextInput.Password
                 inputMethodHints: Qt.ImhSensitiveData
                 onTextChanged: {
-                    root.context.currentText = text;
-                    root.syncDots(text.length);
+                    root.context.currentText = text
+                    root.syncDots(text.length)
                 }
                 onAccepted: root.context.tryUnlock()
 
@@ -148,7 +152,7 @@ Item {
                     target: root.context
                     function onCurrentTextChanged() {
                         if (passwordBox.text !== root.context.currentText)
-                            passwordBox.text = root.context.currentText;
+                            passwordBox.text = root.context.currentText
                     }
                 }
             }
@@ -175,10 +179,7 @@ Item {
                         opacity: dotModel.count > 0 ? 0 : 0.5
 
                         Behavior on opacity {
-                            NumberAnimation {
-                                duration: 180
-                                easing.type: Easing.InOutQuad
-                            }
+                            NumberAnimation {duration: 180; easing.type: Easing.InOutQuad}
                         }
                     }
 
@@ -191,10 +192,7 @@ Item {
                         interactive: false
 
                         Behavior on contentX {
-                            NumberAnimation {
-                                duration: 120
-                                easing.type: Easing.OutCubic
-                            }
+                            NumberAnimation {duration: 120; easing.type: Easing.OutCubic}
                         }
 
                         Row {
@@ -235,8 +233,8 @@ Item {
                                         }
 
                                         Component.onCompleted: {
-                                            opacity = 1;
-                                            scale = 1;
+                                            opacity = 1
+                                            scale = 1
                                         }
                                     }
                                 }
@@ -248,7 +246,8 @@ Item {
                         id: cursor
                         anchors.verticalCenter: parent.verticalCenter
                         x: Math.min(
-                            dotsRow.implicitWidth + 2 - dotsFlickable.contentX, parent.width - width - 2
+                            dotsRow.implicitWidth + 2 - dotsFlickable.contentX, 
+                            parent.width - width - 2
                         )
                         width: 2
                         height: 16

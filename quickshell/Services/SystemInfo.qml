@@ -21,11 +21,11 @@ Singleton {
         command: ["cat", "/proc/uptime"]
         stdout: StdioCollector {
             onStreamFinished: {
-                const totalSeconds = parseFloat(text.trim().split(/\s+/)[0]);
+                const totalSeconds = parseFloat(text.trim().split(/\s+/)[0])
                 if (!isNaN(totalSeconds)) {
-                    const h = Math.floor(totalSeconds / 3600);
-                    const m = Math.floor((totalSeconds % 3600) / 60);
-                    root.uptimeText = `up • ${h}h ${m}m`;
+                    const h = Math.floor(totalSeconds / 3600)
+                    const m = Math.floor((totalSeconds % 3600) / 60)
+                    root.uptimeText = `up • ${h}h ${m}m`
                 }
             }
         }
@@ -36,9 +36,6 @@ Singleton {
         running: true
         repeat: true
         triggeredOnStart: true
-        onTriggered: {
-            if (!uptimeProc.running)
-                uptimeProc.running = true;
-        }
+        onTriggered: if (!uptimeProc.running) uptimeProc.running = true
     }
 }

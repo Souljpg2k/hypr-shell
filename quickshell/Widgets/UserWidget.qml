@@ -20,9 +20,9 @@ PanelWindow {
 
     function requestClose() {
         if (closing)
-            return;
-        closing = true;
-        animation.startExit();
+            return
+        closing = true
+        animation.startExit()
     }
 
     Item {
@@ -182,7 +182,7 @@ PanelWindow {
         target: GlobalStates
 
         function onUserWidgetsCloseRequested() {
-            w.requestClose();
+            w.requestClose()
         }
     }
 }

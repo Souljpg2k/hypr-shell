@@ -9,9 +9,9 @@ Singleton {
     property bool enabled: false
 
     function toggle() {
-        enabled = !enabled;
+        enabled = !enabled
         Quickshell.execDetached(enabled
             ? ["hyprctl", "hyprsunset", "temperature", String(temperatureK)]
-            : ["hyprctl", "hyprsunset", "identity"]);
+            : ["hyprctl", "hyprsunset", "identity"])
     }
 }

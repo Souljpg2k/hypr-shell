@@ -11,7 +11,7 @@ Singleton {
     property string currentLayout: ""
 
     function setLayout(layout) {
-        currentLayout = layout.substring(0, 2).toLowerCase();
+        currentLayout = layout.substring(0, 2).toLowerCase()
     }
 
     Process {
@@ -19,19 +19,18 @@ Singleton {
         command: ["hyprctl", "devices", "-j"]
         stdout: StdioCollector {
             onStreamFinished: {
-                const keyboards = JSON.parse(text).keyboards;
-                const keyboard = keyboards.find(k => k.main);
-                if (keyboard)
-                    root.setLayout(keyboard.active_keymap);
+                const keyboards = JSON.parse(text).keyboards
+                const keyboard = keyboards.find(k => k.main)
+                if (keyboard) root.setLayout(keyboard.active_keymap)
             }
         }
     }
 
     Component.onCompleted: {
-        kbproc.running = true;
+        kbproc.running = true
         Hyprland.rawEvent.connect(event => {
             if (event.name === "activelayout")
-                root.setLayout(event.data.split(",").pop().trim());
-        });
+                root.setLayout(event.data.split(",").pop().trim())
+        })
     }
 }

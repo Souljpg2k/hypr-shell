@@ -35,6 +35,6 @@ Item {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked:GlobalStates.toggleUserWidgets();
+        onClicked:GlobalStates.toggleUserWidgets()
     }
 }

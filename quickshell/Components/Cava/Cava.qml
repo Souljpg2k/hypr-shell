@@ -10,33 +10,31 @@ Canvas {
         target: CavaService
 
         function onLevelsChanged() {
-            cavaCanvas.requestPaint();
+            cavaCanvas.requestPaint()
         }
     }
 
     onPaint: {
-        const ctx = getContext("2d");
-        
-        ctx.clearRect(0, 0, width, height);
-        
-        const levels = CavaService.levels;
-
+        const ctx = getContext("2d")       
+ 
+        ctx.clearRect(0, 0, width, height)
+ 
+        const levels = CavaService.levels
         if (!levels.length)
-            return;
-
-        const step = width / (levels.length - 1);
-        const y = i => height - (levels[i] / CavaService.maxValue) * 24;
+            return
+        const step = width / (levels.length - 1)
+        const y = i => height - (levels[i] / CavaService.maxValue) * 24
         
-        ctx.fillStyle = Colors.pf;
-        ctx.globalAlpha = 0.2;
-        ctx.beginPath();
-        ctx.moveTo(0, height);
-        ctx.lineTo(0, y(0));
+        ctx.fillStyle = Colors.pf
+        ctx.globalAlpha = 0.2
+        ctx.beginPath()
+        ctx.moveTo(0, height)
+        ctx.lineTo(0, y(0))
         
         for (let i = 0; i < levels.length - 1; i++)
-            ctx.quadraticCurveTo(i * step, y(i), (i + 0.5) * step, (y(i) + y(i + 1)) / 2);
-        ctx.lineTo(width, y(levels.length - 1));
-        ctx.lineTo(width, height);
-        ctx.fill();
+            ctx.quadraticCurveTo(i * step, y(i), (i + 0.5) * step, (y(i) + y(i + 1)) / 2)
+        ctx.lineTo(width, y(levels.length - 1))
+        ctx.lineTo(width, height)
+        ctx.fill()
     }
 }

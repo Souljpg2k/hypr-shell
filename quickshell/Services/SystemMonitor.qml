@@ -20,33 +20,31 @@ Singleton {
         stdout: SplitParser {
             onRead: line => {
                 if (!line.startsWith("cpu "))
-                    return;
-                const p = line.trim().split(/\s+/);
-                const idle = Number(p[4]) + Number(p[5]);
-                const total = p.slice(1, 8).reduce((a, b) => a + Number(b), 0);
+                    return
+                const p = line.trim().split(/\s+/)
+                const idle = Number(p[4]) + Number(p[5])
+                const total = p.slice(1, 8).reduce((a, b) => a + Number(b), 0)
                 if (root.previousTotal > 0) {
-                    const totalDelta = total - root.previousTotal;
-                    const idleDelta = idle - root.previousIdle;
+                    const totalDelta = total - root.previousTotal
+                    const idleDelta = idle - root.previousIdle
                     if (totalDelta > 0)
-                        root.cpuUsage = Math.max(0, Math.min(100, Math.round(100 * (1 - idleDelta / totalDelta))));
+                        root.cpuUsage = Math.max(
+                            0, Math.min(100, Math.round(100 * (1 - idleDelta / totalDelta))))
                 }
-                root.previousTotal = total;
-                root.previousIdle = idle;
+                root.previousTotal = total
+                root.previousIdle = idle
             }
         }
     }
 
     Process {
         id: gpuProc
-        command: [
-            "sh", 
-            "-c", 
-            "cat /sys/class/drm/card1/device/gpu_busy_percent 2>/dev/null || echo 0"]
+        command: ["sh", "-c", "cat /sys/class/drm/card1/device/gpu_busy_percent 2>/dev/null || echo 0"]
         stdout: SplitParser {
             onRead: data => {
-                const usage = Number(data.trim());
+                const usage = Number(data.trim())
                 if (!isNaN(usage))
-                    root.gpuUsage = Math.max(0, Math.min(100, Math.round(usage)));
+                    root.gpuUsage = Math.max(0, Math.min(100, Math.round(usage)))
             }
         }
     }
@@ -59,9 +57,8 @@ Singleton {
             "/proc/meminfo"]
         stdout: SplitParser {
             onRead: data => {
-                const usage = Number(data.trim());
-                if (!isNaN(usage))
-                    root.memUsage = Math.round(usage);
+                const usage = Number(data.trim())
+                if (!isNaN(usage)) root.memUsage = Math.round(usage)
             }
         }
     }
@@ -72,9 +69,9 @@ Singleton {
         repeat: true
         triggeredOnStart: true
         onTriggered: {
-            cpuProc.running = true;
-            gpuProc.running = true;
-            memProc.running = true;
+            cpuProc.running = true
+            gpuProc.running = true
+            memProc.running = true
         }
     }
 }

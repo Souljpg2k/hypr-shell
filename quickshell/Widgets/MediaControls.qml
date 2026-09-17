@@ -28,7 +28,7 @@ PanelWindow {
 
     function syncProgress() {
         if (!isSeeking)
-            visualProgress = MprisService.progress;
+            visualProgress = MprisService.progress
     }
 
     Timer {
@@ -37,10 +37,10 @@ PanelWindow {
         repeat: true
 
         onTriggered: {
-            root.wavePhase += 0.12;
+            root.wavePhase += 0.12
 
             if (root.wavePhase > Math.PI * 2)
-                root.wavePhase -= Math.PI * 2;
+                root.wavePhase -= Math.PI * 2
         }
     }
 
@@ -48,22 +48,22 @@ PanelWindow {
         target: MprisService
 
         function onDisplayPositionChanged() {
-            root.syncProgress();
+            root.syncProgress()
         }
 
         function onLengthChanged() {
-            root.syncProgress();
+            root.syncProgress()
         }
 
         function onProgressChanged() {
-            root.syncProgress();
+            root.syncProgress()
         }
 
         function onActivePlayerChanged() {
-            root.syncProgress();
+            root.syncProgress()
         }
     }
-    
+
     Item {
         id: content
         width: parent.width
@@ -148,9 +148,7 @@ PanelWindow {
                     MouseArea {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            GlobalStates.mediaControlsWlrLayer = !GlobalStates.mediaControlsWlrLayer;
-                        }
+                        onClicked: GlobalStates.mediaControlsWlrLayer = !GlobalStates.mediaControlsWlrLayer
                     }
                 }
 
@@ -220,49 +218,48 @@ PanelWindow {
                                 height: seekBar.height
 
                                 onPaint: {
-                                    const ctx = getContext("2d");
+                                    const ctx = getContext("2d")
 
-                                    ctx.clearRect(0, 0, width, height);
+                                    ctx.clearRect(0, 0, width, height)
 
-                                    const centerY = height / 2;
-                                    const amplitude = 2;
-                                    const wavelength = 20;
-                                    const segmentLength = wavelength / 2;
-                                    const controlOffset = amplitude * 2;
-                                    const r = strokeWidth / 2;
-                                    const fadeInLength = strokeWidth;
+                                    const centerY = height / 2
+                                    const amplitude = 2
+                                    const wavelength = 20
+                                    const segmentLength = wavelength / 2
+                                    const controlOffset = amplitude * 2
+                                    const r = strokeWidth / 2
+                                    const fadeInLength = strokeWidth
+                                    const scrollX = root.wavePhase / (Math.PI * 2) * wavelength
 
-                                    const scrollX = root.wavePhase / (Math.PI * 2) * wavelength;
-
-                                    ctx.beginPath();
+                                    ctx.beginPath()
 
                                     for (let x = 0; x <= seekBar.width; x++) {
-                                        const shifted = x + scrollX;
-                                        const segment = Math.floor(shifted / segmentLength);
-                                        const t = (shifted - segment * segmentLength) / segmentLength;
-                                        const direction = segment % 2 === 0 ? 1 : -1;
-                                        const d = 2 * t * (1 - t) * controlOffset * direction;
-                                        const envelope = Math.min(x / fadeInLength, 1);
-                                        const y = centerY + d * envelope;
+                                        const shifted = x + scrollX
+                                        const segment = Math.floor(shifted / segmentLength)
+                                        const t = (shifted - segment * segmentLength) / segmentLength
+                                        const direction = segment % 2 === 0 ? 1 : -1
+                                        const d = 2 * t * (1 - t) * controlOffset * direction
+                                        const envelope = Math.min(x / fadeInLength, 1)
+                                        const y = centerY + d * envelope
 
                                         if (x === 0)
-                                            ctx.moveTo(x + r, y);
+                                            ctx.moveTo(x + r, y)
                                         else
-                                            ctx.lineTo(x + r, y);
+                                            ctx.lineTo(x + r, y)
                                     }
 
-                                    ctx.strokeStyle = Colors.on_sf;
-                                    ctx.lineWidth = strokeWidth;
-                                    ctx.lineCap = "round";
-                                    ctx.lineJoin = "round";
-                                    ctx.stroke();
+                                    ctx.strokeStyle = Colors.on_sf
+                                    ctx.lineWidth = strokeWidth
+                                    ctx.lineCap = "round"
+                                    ctx.lineJoin = "round"
+                                    ctx.stroke()
                                 }
 
                                 Connections {
                                     target: root
 
                                     function onWavePhaseChanged() {
-                                        waveCanvas.requestPaint();
+                                        waveCanvas.requestPaint()
                                     }
                                 }
 
@@ -287,27 +284,27 @@ PanelWindow {
                             cursorShape: Qt.PointingHandCursor
 
                             onPressed: mouse => {
-                                root.isSeeking = true;
-                                root.visualProgress = Math.max(0, Math.min(1, mouse.x / width));
+                                root.isSeeking = true
+                                root.visualProgress = Math.max(0, Math.min(1, mouse.x / width))
                             }
 
                             onPositionChanged: mouse => {
                                 if (!pressed)
-                                    return;
-                                root.visualProgress = Math.max(0, Math.min(1, mouse.x / width));
+                                    return
+                                root.visualProgress = Math.max(0, Math.min(1, mouse.x / width))
                             }
 
                             onReleased: {
-                                const pct = root.visualProgress;
+                                const pct = root.visualProgress
 
-                                MprisService.seekPercent(pct);
-                                root.isSeeking = false;
-                                root.visualProgress = pct;
+                                MprisService.seekPercent(pct)
+                                root.isSeeking = false
+                                root.visualProgress = pct
                             }
 
                             onCanceled: {
-                                root.isSeeking = false;
-                                root.syncProgress();
+                                root.isSeeking = false
+                                root.syncProgress()
                             }
                         }
                     }
@@ -402,23 +399,23 @@ PanelWindow {
         }
 
         Component.onCompleted: {
-            root.syncProgress();
-            animation.startEnter();
+            root.syncProgress()
+            animation.startEnter()
         }
     }
 
     function close() {
         if (closing)
-            return;
-        closing = true;
-        animation.startExit();
+            return
+        closing = true
+        animation.startExit()
     }
 
     Connections {
         target: GlobalStates
 
         function onMediaControlsCloseRequested() {
-            root.close();
+            root.close()
         }
     }
 }

@@ -18,32 +18,32 @@ Item {
         anchors.centerIn: parent
 
         onPaint: {
-            const ctx = getContext("2d");
+            const ctx = getContext("2d")
 
-            ctx.reset();
+            ctx.reset()
 
-            const cx = width / 2;
-            const cy = height / 2;
-            const petals = 8;
-            const baseRadius = 66;
-            const waveRadius = 5;
+            const cx = width / 2
+            const cy = height / 2
+            const petals = 8
+            const baseRadius = 66
+            const waveRadius = 5
 
-            ctx.beginPath();
+            ctx.beginPath()
 
             for (let i = 0; i <= 360; i++) {
-                const t = i * Math.PI / 180;
-                const r = baseRadius + waveRadius * Math.sin(t * petals);
-                const x = cx + Math.cos(t) * r;
-                const y = cy + Math.sin(t) * r;
+                const t = i * Math.PI / 180
+                const r = baseRadius + waveRadius * Math.sin(t * petals)
+                const x = cx + Math.cos(t) * r
+                const y = cy + Math.sin(t) * r
                 if (i === 0)
-                    ctx.moveTo(x, y);
+                    ctx.moveTo(x, y)
                 else
-                    ctx.lineTo(x, y);
+                    ctx.lineTo(x, y)
             }
             
-            ctx.closePath();
-            ctx.fillStyle = Colors.bg;
-            ctx.fill();
+            ctx.closePath()
+            ctx.fillStyle = Colors.bg
+            ctx.fill()
         }
 
         RotationAnimation on rotation {

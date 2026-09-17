@@ -26,7 +26,6 @@ Item {
                 rightMargin: 10
                 topMargin: 10
             }
-
             width: 30
             height: 30
             radius: Appearance.radius
@@ -54,7 +53,6 @@ Item {
                     bold: true
                 }
             }
-
             StyledText {
                 text: "CPU"
             }

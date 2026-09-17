@@ -70,29 +70,26 @@ SequentialAnimation {
     ScriptAction {
         script: {
             if (root.closing)
-                root.exited();
+                root.exited()
             else
-                root.entered();
+                root.entered()
         }
     }
 
     function startEnter() {
-        stop();
-
-        closing = false;
-        target.x = enterX;
-        target.y = enterY;
-        target.opacity = 0;
-        target.scale = 0.94;
-        target.rotation = enterRotation;
-
-        start();
+        stop()
+        closing = false
+        target.x = enterX
+        target.y = enterY
+        target.opacity = 0
+        target.scale = 0.94
+        target.rotation = enterRotation
+        start()
     }
 
     function startExit() {
-        stop();
-
-        closing = true;
-        start();
+        stop()
+        closing = true
+        start()
     }
 }

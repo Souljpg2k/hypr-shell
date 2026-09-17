@@ -16,8 +16,8 @@ Singleton {
         stdout: SplitParser {
             onRead: data => {
                 if (!data)
-                    return;
-                root.levels = data.split(";").filter(v => v.length > 0).map(Number);
+                    return
+                root.levels = data.split(";").filter(v => v.length > 0).map(Number)
             }
         }
     }

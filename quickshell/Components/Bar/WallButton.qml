@@ -11,6 +11,6 @@ StyledItem {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: GlobalStates.toggleWallpaperPicker();
+        onClicked: GlobalStates.toggleWallpaperPicker()
     }
 }

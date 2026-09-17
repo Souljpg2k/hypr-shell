@@ -42,9 +42,9 @@ PanelWindow {
 
     function close() {
         if (closing)
-            return;
-        closing = true;
-        animation.startExit();
+            return
+        closing = true
+        animation.startExit()
     }
 
     Animations {
@@ -63,7 +63,7 @@ PanelWindow {
         target: GlobalStates
 
         function onSysWidgetsCloseRequested() {
-            root.close();
+            root.close()
         }
     }
 }

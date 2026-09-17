@@ -58,8 +58,7 @@ Singleton {
     }
 
     function syncPosition() {
-        if (activePlayer)
-            setPositionAnchor(activePlayer.position)
+        if (activePlayer) setPositionAnchor(activePlayer.position)
     }
 
     function seekTo(value) {
@@ -82,14 +81,12 @@ Singleton {
     }
 
     function toggleShuffle() {
-        if (shuffleSupported)
-            activePlayer.shuffle = !activePlayer.shuffle
+        if (shuffleSupported) activePlayer.shuffle = !activePlayer.shuffle
     }
 
     function toggleLoop() {
         if (!loopSupported)
             return
-
         if (loopState === MprisLoopState.None)
             activePlayer.loopState = MprisLoopState.Track
         else if (loopState === MprisLoopState.Track)
@@ -99,18 +96,15 @@ Singleton {
     }
 
     function togglePlaying() {
-        if (canTogglePlaying)
-            activePlayer.togglePlaying()
+        if (canTogglePlaying) activePlayer.togglePlaying()
     }
 
     function previous() {
-        if (canGoPrevious)
-            activePlayer.previous()
+        if (canGoPrevious) activePlayer.previous()
     }
 
     function next() {
-        if (canGoNext)
-            activePlayer.next()
+        if (canGoNext) activePlayer.next()
     }
 
     function updateTrack() {
@@ -156,7 +150,6 @@ Singleton {
                         return
                     }
                 }
-
                 root.trackedPlayer = Mpris.players.values[0] ?? null
             }
 
@@ -165,7 +158,6 @@ Singleton {
                     root.trackedPlayer = modelData
                     return
                 }
-
                 if (modelData === root.activePlayer) {
                     root.seeking = false
                     root.setPositionAnchor(modelData.position)
@@ -182,7 +174,6 @@ Singleton {
                     }
                     return
                 }
-
                 root.setPositionAnchor(modelData.position)
             }
 
@@ -222,15 +213,9 @@ Singleton {
 
     FrameAnimation {
         running: root.isPlaying && root.length > 0
-
         onTriggered: {
-            root.displayPosition = Math.max(
-                0,
-                Math.min(
-                    root.length,
-                    root.positionAnchor
-                        + (Date.now() - root.positionAnchorTime) / 1000
-                )
+            root.displayPosition = Math.max(0, Math.min(
+                root.length,root.positionAnchor + (Date.now() - root.positionAnchorTime) / 1000)
             )
         }
     }

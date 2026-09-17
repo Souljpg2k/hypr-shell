@@ -118,6 +118,7 @@ Item {
 
     Connections {
         target: root.context
+        
         function onUnlocked() {
             if (root.unlocking)
                 return

@@ -38,87 +38,87 @@ Singleton {
     property alias mediaControlsWlrLayer: persist.mediaControlsWlrLayer
 
     function showClock() {
-        clockVisible = true;
-        clockClosing = false;
+        clockVisible = true
+        clockClosing = false
     }
 
     function hideClock() {
         if (!clockVisible)
             return;
-        clockClosing = true;
-        clockVisible = false;
+        clockClosing = true
+        clockVisible = false
     }
 
     function toggleClock() {
         if (clockVisible)
-            hideClock();
+            hideClock()
         else
-            showClock();
+            showClock()
     }
 
     function toggleSysWidgets() {
         if (sysWidgetsVisible)
-            sysWidgetsCloseRequested();
+            sysWidgetsCloseRequested()
         else
-            sysWidgetsVisible = true;
+            sysWidgetsVisible = true
     }
 
     function togglePowerMenu() {
         if (powerMenuVisible)
-            closePowerMenu();
+            closePowerMenu()
         else
-            openPowerMenu();
+            openPowerMenu()
     }
 
     function openPowerMenu() {
-        powerMenuVisible = true;
-        powerMenuClosing = false;
+        powerMenuVisible = true
+        powerMenuClosing = false
 
         if (clockVisible) {
-            clockHiddenByPowerMenu = true;
-            hideClock();
+            clockHiddenByPowerMenu = true
+            hideClock()
         }
     }
 
     function closePowerMenu() {
-        powerMenuClosing = true;
+        powerMenuClosing = true
 
         if (clockHiddenByPowerMenu) {
-            clockHiddenByPowerMenu = false;
-            showClock();
+            clockHiddenByPowerMenu = false
+            showClock()
         }
     }
 
     onWallpaperPickerVisibleChanged: {
         if (wallpaperPickerVisible) {
             if (clockVisible) {
-                clockHiddenByWallpaperPicker = true;
-                hideClock();
+                clockHiddenByWallpaperPicker = true
+                hideClock()
             }
         } else if (clockHiddenByWallpaperPicker) {
-            clockHiddenByWallpaperPicker = false;
-            showClock();
+            clockHiddenByWallpaperPicker = false
+            showClock()
         }
     }
 
     function toggleWallpaperPicker() {
         if (wallpaperPickerVisible)
-            wallpaperCloseRequested();
+            wallpaperCloseRequested()
         else
-            wallpaperPickerVisible = true;
+            wallpaperPickerVisible = true
     }
 
     function toggleUserWidgets() {
         if (userWidgetsVisible)
-            userWidgetsCloseRequested();
+            userWidgetsCloseRequested()
         else
-            userWidgetsVisible = true;
+            userWidgetsVisible = true
     }
 
     function toggleMediaControls() {
         if (mediaControlsVisible)
-            mediaControlsCloseRequested();
+            mediaControlsCloseRequested()
         else
-            mediaControlsVisible = true;
+            mediaControlsVisible = true
     }
 }

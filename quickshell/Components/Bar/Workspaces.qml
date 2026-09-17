@@ -18,21 +18,21 @@ Item {
     readonly property int activeId: Hyprland.focusedWorkspace?.id ?? 1
 
     function indicatorX(id) {
-        return wsRow.x + (id - 1) * itemWidth + (itemWidth - dotSize) / 2;
+        return wsRow.x + (id - 1) * itemWidth + (itemWidth - dotSize) / 2
     }
 
     function focusWorkspace(id) {
         if (id < 1 || id > wsCount)
-            return;
+            return
         if (Hyprland.usingLua) {
-            Hyprland.dispatch("hl.dsp.focus({ workspace = " + id + " })");
+            Hyprland.dispatch("hl.dsp.focus({ workspace = " + id + " })")
         } else {
-            Hyprland.dispatch("workspace " + id);
+            Hyprland.dispatch("workspace " + id)
         }
     }
 
     function focusRelative(delta) {
-        focusWorkspace(activeId + delta);
+        focusWorkspace(activeId + delta)
     }
 
     Rectangle {
@@ -50,17 +50,10 @@ Item {
         width: Math.abs(root.indicatorX(currId) - root.indicatorX(prevId)) + dotSize
 
         Behavior on x {
-            NumberAnimation {
-                duration: root.animDuration
-                easing.type: Easing.OutCubic
-            }
+            NumberAnimation {duration: root.animDuration; easing.type: Easing.OutCubic}
         }
-
         Behavior on width {
-            NumberAnimation {
-                duration: root.animDuration
-                easing.type: Easing.OutCubic
-            }
+            NumberAnimation {duration: root.animDuration; easing.type: Easing.OutCubic}
         }
     }
 
@@ -74,9 +67,9 @@ Item {
         target: Hyprland
 
         function onFocusedWorkspaceChanged() {
-            pill.prevId = pill.currId;
-            pill.currId = Hyprland.focusedWorkspace?.id ?? 1;
-            resetTimer.restart();
+            pill.prevId = pill.currId
+            pill.currId = Hyprland.focusedWorkspace?.id ?? 1
+            resetTimer.restart()
         }
     }
 
@@ -93,17 +86,22 @@ Item {
                 height: 28
 
                 readonly property int workspaceId: index + 1
-                readonly property var workspace: Hyprland.workspaces.values.find(workspace => workspace.id === workspaceId)
+                readonly property var workspace: Hyprland.workspaces.values.find(
+                    workspace => workspace.id === workspaceId)
+                
                 readonly property bool isActive: Hyprland.focusedWorkspace?.id === workspaceId
 
                 readonly property var wsToplevel: {
                     if (!workspace || isActive)
-                        return null;
-                    const toplevels = Hyprland.toplevels.values.filter(t => t.workspace?.id === workspaceId);
-                    return toplevels.find(t => t.activated) ?? toplevels[toplevels.length - 1] ?? null;
+                        return null
+                    const toplevels = Hyprland.toplevels.values.filter(
+                        t => t.workspace?.id === workspaceId)
+                    return toplevels.find(
+                        t => t.activated) ?? toplevels[toplevels.length - 1] ?? null
                 }
                 readonly property string wsIconName: wsToplevel ? (
-                    DesktopEntries.heuristicLookup(wsToplevel.wayland?.appId ?? "")?.icon ?? "") : ""
+                    DesktopEntries.heuristicLookup(
+                        wsToplevel.wayland?.appId ?? "")?.icon ?? "") : ""
 
                 Rectangle {
                     id: dotBg
@@ -115,10 +113,7 @@ Item {
                     opacity: workspace && !isActive ? 0.08 : 0
 
                     Behavior on opacity {
-                        NumberAnimation {
-                            duration: root.animDuration
-                            easing.type: Easing.OutCubic
-                        }
+                        NumberAnimation {duration: root.animDuration; easing.type: Easing.OutCubic}
                     }
                 }
 
@@ -133,10 +128,7 @@ Item {
                     }
 
                     Behavior on color {
-                        ColorAnimation {
-                            duration: 300
-                            easing.type: Easing.OutBack
-                        }
+                        ColorAnimation {duration: 300; easing.type: Easing.OutBack}
                     }
                 }
 
@@ -148,10 +140,7 @@ Item {
                     opacity: wsIconName ? 0.9 : 0
 
                     Behavior on opacity {
-                        NumberAnimation {
-                            duration: root.animDuration
-                            easing.type: Easing.OutCubic
-                        }
+                        NumberAnimation {duration: root.animDuration; easing.type: Easing.OutCubic}
                     }
                 }
 

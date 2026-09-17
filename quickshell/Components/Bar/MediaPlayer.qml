@@ -17,9 +17,9 @@ Item {
         onClicked: GlobalStates.toggleMediaControls()
         onWheel: wheel => {
             if (wheel.angleDelta.y > 0)
-                AudioService.volumeUp();
+                AudioService.volumeUp()
             else
-                AudioService.volumeDown();
+                AudioService.volumeDown()
         }
     }
 
@@ -45,9 +45,9 @@ Item {
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
                     if (GlobalStates.mediaControlsWlrLayer)
-                        GlobalStates.mediaControlsWlrLayer = false;
+                        GlobalStates.mediaControlsWlrLayer = false
                     else
-                        GlobalStates.mediaControlsWlrLayer = true;
+                        GlobalStates.mediaControlsWlrLayer = true
                 }
             }
         }

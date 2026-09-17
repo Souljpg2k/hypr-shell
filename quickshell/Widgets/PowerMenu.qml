@@ -46,37 +46,37 @@ PanelWindow {
     ]
 
     function runAction(index) {
-        actions[index].action();
-        requestClose();
+        actions[index].action()
+        requestClose()
     }
 
     function requestClose() {
         if (closing)
-            return;
-        closing = true;
-        focusGrab.active = false;
-        GlobalStates.closePowerMenu(); 
+            return
+        closing = true
+        focusGrab.active = false
+        GlobalStates.closePowerMenu()
     }
 
     function moveFocus(step) {
-        focusIndex = (focusIndex + step + actions.length) % actions.length;
+        focusIndex = (focusIndex + step + actions.length) % actions.length
     }
 
     contentItem.focus: true
 
     contentItem.Keys.onPressed: event => {
         if (event.key === Qt.Key_Left || event.key === Qt.Key_Up) {
-            moveFocus(-1);
+            moveFocus(-1)
         } else if (event.key === Qt.Key_Right || event.key === Qt.Key_Down) {
-            moveFocus(1);
+            moveFocus(1)
         } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
-            runAction(focusIndex);
+            runAction(focusIndex)
         } else if (event.key === Qt.Key_Escape) {
-            requestClose();
+            requestClose()
         } else {
-            return;
+            return
         }
-        event.accepted = true;
+        event.accepted = true
     }
 
     Component.onCompleted: animation.startEnter()
@@ -157,8 +157,8 @@ PanelWindow {
                             hoverEnabled: true
                             onEntered: p.focusIndex = index
                             onClicked: {
-                                p.focusIndex = index;
-                                p.runAction(index);
+                                p.focusIndex = index
+                                p.runAction(index)
                             }
                         }
                     }
@@ -171,8 +171,8 @@ PanelWindow {
         id: animation
         target: content
         onExited: {
-            GlobalStates.powerMenuVisible = false;
-            GlobalStates.powerMenuClosing = false;
+            GlobalStates.powerMenuVisible = false
+            GlobalStates.powerMenuClosing = false
         }
     }
 
@@ -181,7 +181,7 @@ PanelWindow {
 
         function onPowerMenuClosingChanged() {
             if (GlobalStates.powerMenuClosing)
-                animation.startExit();
+                animation.startExit()
         }
     }
 }
