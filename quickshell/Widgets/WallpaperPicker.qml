@@ -18,6 +18,7 @@ PanelWindow {
         right: true
         bottom: true
     }
+
     implicitWidth: 600
     implicitHeight: 320
     exclusiveZone: 0
@@ -26,14 +27,9 @@ PanelWindow {
 
     function close() {
         if (closing)
-            return;
-        closing = true;
-        animation.startExit();
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: root.close()
+            return
+        closing = true
+        animation.startExit()
     }
 
     Item {
@@ -42,6 +38,12 @@ PanelWindow {
         height: parent.height
         opacity: 0
         scale: 0.94
+
+        MouseArea {
+            anchors.fill: parent
+            z: -1
+            onClicked: root.close()
+        }
 
         StyledShadow {
             anchors.centerIn: box
@@ -56,10 +58,16 @@ PanelWindow {
             height: 300
             radius: Appearance.radius
             color: Colors.bg
+
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 bottom: parent.bottom
                 bottomMargin: 10
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {}
             }
 
             GridView {
@@ -67,9 +75,10 @@ PanelWindow {
                 clip: true
                 focus: true
                 model: Wallpapers.wallpapers
-                currentIndex: 0
+                currentIndex: Wallpapers.savedIndex()
                 cellWidth: 180
                 cellHeight: 140
+
                 anchors {
                     top: parent.top
                     left: parent.left
@@ -79,41 +88,54 @@ PanelWindow {
                 }
 
                 function choose(index) {
-                    const item = itemAtIndex(index);
-                    if (!item)
-                        return;
-                    currentIndex = index;
-                    Wallpapers.apply(item.filePath);
-                    root.close();
+                    if (index < 0 || index >= count)
+                        return
+                    const path = Wallpapers.wallpapers.get(index, "filePath")
+                    if (!path)
+                        return
+                    currentIndex = index
+                    Wallpapers.apply(path)
+                    root.close()
                 }
 
                 Keys.onPressed: event => {
-                    let next = currentIndex;
+                    let next = currentIndex
 
                     if (event.key === Qt.Key_Left) {
-                        next--;
+                        next--
                     } else if (event.key === Qt.Key_Right) {
-                        next++;
+                        next++
                     } else if (event.key === Qt.Key_Up) {
-                        next -= 3;
+                        next -= 3
                     } else if (event.key === Qt.Key_Down) {
-                        next += 3;
-                    } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
-                        choose(currentIndex);
-                        event.accepted = true;
-                        return;
+                        next += 3
+                    } else if (
+                        event.key === Qt.Key_Return ||
+                        event.key === Qt.Key_Enter ||
+                        event.key === Qt.Key_Space
+                    ) {
+                        choose(currentIndex)
+                        event.accepted = true
+                        return
                     } else if (event.key === Qt.Key_Escape) {
-                        root.close();
-                        event.accepted = true;
-                        return;
+                        root.close()
+                        event.accepted = true
+                        return
                     } else {
-                        return;
+                        return
                     }
-                    currentIndex = Math.max(0, Math.min(count - 1, next));
-                    event.accepted = true;
+
+                    currentIndex = Math.max(0,Math.min(count - 1, next))
+
+                    positionViewAtIndex(currentIndex, GridView.Visible)
+
+                    event.accepted = true
                 }
 
-                Component.onCompleted: forceActiveFocus()
+                Component.onCompleted: {
+                    positionViewAtIndex(currentIndex, GridView.Visible)
+                    forceActiveFocus()
+                }
 
                 delegate: Item {
                     id: cell
@@ -130,17 +152,12 @@ PanelWindow {
                     property bool selected: GridView.isCurrentItem
 
                     Behavior on opacity {
-                        NumberAnimation {
-                            duration: 180
-                        }
+                        NumberAnimation {duration: 180}
                     }
                     Behavior on scale {
-                        NumberAnimation {
-                            duration: 180
-                            easing.type: Easing.OutCubic
-                        }
+                        NumberAnimation {duration: 180; easing.type: Easing.OutCubic}
                     }
-
+                    
                     Timer {
                         interval: 70 + Math.min(cell.index, 10) * 32
                         running: panel.opacity > 0.5
@@ -155,9 +172,7 @@ PanelWindow {
                         scale: mouse.pressed ? 0.96 : 1
 
                         Behavior on scale {
-                            NumberAnimation {
-                                duration: 100
-                            }
+                            NumberAnimation {duration: 100}
                         }
 
                         Image {
@@ -175,9 +190,7 @@ PanelWindow {
                             opacity: mouse.pressed ? 0.28 : mouse.containsMouse ? 0 : 0.15
 
                             Behavior on opacity {
-                                NumberAnimation {
-                                    duration: 140
-                                }
+                                NumberAnimation {duration: 140}
                             }
                         }
                     }
@@ -213,14 +226,16 @@ PanelWindow {
         exitY: 100
         onExited: GlobalStates.wallpaperPickerVisible = false
     }
-    
-    Component.onCompleted: animation.startEnter()
+
+    Component.onCompleted: {
+        animation.startEnter()
+    }
 
     Connections {
         target: GlobalStates
 
         function onWallpaperCloseRequested() {
-            root.close();
+            root.close()
         }
     }
 }

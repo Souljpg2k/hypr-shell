@@ -20,7 +20,9 @@ Singleton {
 
         JsonAdapter {
             id: stateAdapter
+
             property bool darkMode: true
+            property string wallpaperPath: ""
         }
     }
 
@@ -37,8 +39,16 @@ Singleton {
         showDirs: false
         showOnlyReadable: true
         nameFilters: [
-            "*.jpg", "*.jpeg", "*.png", "*.webp", "*.gif",
-            "*.JPG", "*.JPEG", "*.PNG", "*.WEBP", "*.GIF"
+            "*.jpg",
+            "*.jpeg",
+            "*.png",
+            "*.webp",
+            "*.gif",
+            "*.JPG",
+            "*.JPEG",
+            "*.PNG",
+            "*.WEBP",
+            "*.GIF"
         ]
     }
 
@@ -48,6 +58,7 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 const lines = text.trim().split("\n")
+
                 for (const line of lines) {
                     const index = line.indexOf("image:")
                     if (index < 0)
@@ -55,7 +66,10 @@ Singleton {
                     const currentPath = line.slice(index + 6).trim()
                     if (!currentPath)
                         continue
+
                     root.wallpaperPath = filePath(currentPath)
+                    stateAdapter.wallpaperPath = root.wallpaperPath
+
                     colorUpdateTimer.restart()
                     break
                 }
@@ -65,15 +79,29 @@ Singleton {
 
     function filePath(path) {
         const value = String(path)
+
         if (value.startsWith("file://"))
             return decodeURIComponent(value.replace("file://", ""))
         return value
     }
 
+    function savedIndex() {
+        const saved = filePath(stateAdapter.wallpaperPath)
+
+        if (!saved)
+            return 0
+        for (let i = 0; i < wallpaperModel.count; i++) {
+            const path = filePath(wallpaperModel.get(i, "filePath"))
+            if (path === saved)
+                return i
+        }
+        return 0
+    }
+
     function updateColors() {
         if (!wallpaperPath)
             return
-        
+
         Quickshell.execDetached([
             "matugen",
             "image",
@@ -87,9 +115,11 @@ Singleton {
     function apply(p) {
         if (!p)
             return
+
         const path = filePath(p)
-        
+
         wallpaperPath = path
+        stateAdapter.wallpaperPath = path
         Quickshell.execDetached([
             "awww",
             "img",
@@ -107,6 +137,7 @@ Singleton {
     }
 
     Component.onCompleted: {
+        wallpaperPath = stateAdapter.wallpaperPath
         wallpaperQuery.running = true
     }
 }
