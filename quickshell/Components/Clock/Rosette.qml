@@ -40,6 +40,7 @@ Item {
                 else
                     ctx.lineTo(x, y);
             }
+            
             ctx.closePath();
             ctx.fillStyle = Colors.bg;
             ctx.fill();

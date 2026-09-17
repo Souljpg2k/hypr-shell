@@ -9,10 +9,13 @@ Canvas {
 
     onPaint: {
         const ctx = getContext("2d")
+        
         ctx.reset()
         ctx.fillStyle = Colors.sf
+
         const scale = size / 34
         const r = 5 * scale
+
         ctx.beginPath()
         ctx.moveTo(8.5 * scale, 6 * scale)
         ctx.arcTo(17 * scale, 0, 34 * scale, 12 * scale, r)
