@@ -34,7 +34,7 @@ PanelWindow {
             }
 
             Item {
-                width: 260
+                width: 100
                 height: bar.h
 
                 RowLayout {
@@ -45,22 +45,25 @@ PanelWindow {
                         Layout.leftMargin: 3
                     }
                     ActiveWindow {}
-                    MediaPlayer {}
                 }
             }
         }
 
         Item {
-            anchors.centerIn: parent
+            anchors {
+                centerIn: parent
+                horizontalCenterOffset: -60
+            }
             width: 390
             height: bar.h
 
             RowLayout {
                 anchors.centerIn: parent
-                spacing: -2
-
+                
+                MediaPlayer {}
                 UserName {}
                 Workspaces {}
+                DateTime {}
                 HyprlandXkb {}
             }
         }
@@ -73,12 +76,11 @@ PanelWindow {
             }
 
             Item {
-                width: 290
+                width: 170
                 height: bar.h
 
                 RowLayout {
-                    anchors.fill: parent
-                    spacing: -10
+                    spacing: -5
 
                     Item {
                         width: 110
@@ -93,7 +95,6 @@ PanelWindow {
                             DarkModeBtn {}
                         }
                     }
-                    DateTime {}
                     WifiButton {}
                     PowerButton {}
                 }

@@ -4,11 +4,9 @@ import qs.Services
 import QtQuick
 import Quickshell
 
-Item {
-    width: 50
-    height: 18
-
+StyledItem {
     Row {
+        anchors.centerIn: parent
         spacing: 4
     
         MaterialIcon {
@@ -18,7 +16,7 @@ Item {
 
         StyledText {
             text: LayoutService.currentLayout
-            font.pixelSize: Appearance.base + 1
+            font.pixelSize: Appearance.base
             width: 20
         }
     }

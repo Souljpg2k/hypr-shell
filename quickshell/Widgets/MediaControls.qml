@@ -20,7 +20,7 @@ PanelWindow {
         top: true
         left: true
     }
-    margins.left: 120
+    margins.left: 200
     implicitWidth: 290
     implicitHeight: 140
     WlrLayershell.layer: GlobalStates.mediaControlsWlrLayer ? WlrLayer.Bottom : WlrLayer.Overlay

@@ -10,17 +10,15 @@ Item {
     Row {
         anchors.centerIn: parent
         spacing: 4
-
-        StyledText {
-            text: DateTimeService.date
-        }
-
+        
         StyledText {
             text: DateTimeService.time
         }
-        
+        Text {
+            text: "•"
+        }
         StyledText {
-            text: DateTimeService.ap
+            text: DateTimeService.date
         }
     }
 

@@ -21,7 +21,7 @@ Item {
 
             Image {
                 anchors.fill: parent
-                source: "../../Assets/2.png"
+                source: "../../Assets/2.jpg"
                 fillMode: Image.PreserveAspectCrop
             }
         }

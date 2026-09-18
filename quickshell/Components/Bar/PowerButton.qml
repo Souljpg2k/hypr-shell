@@ -6,7 +6,7 @@ import Quickshell
 StyledItem {
     MaterialIcon {
         anchors.centerIn: parent
-        text: "power_settings_new"
+        text: "analytics"
     }
 
     MouseArea {
