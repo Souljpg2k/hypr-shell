@@ -104,7 +104,6 @@ Item {
                         wsToplevel.wayland?.appId ?? "")?.icon ?? "") : ""
 
                 Rectangle {
-                    id: dotBg
                     anchors.centerIn: parent
                     width: dotSize
                     height: dotSize
@@ -118,7 +117,6 @@ Item {
                 }
 
                 Text {
-                    id: wsLabel
                     anchors.centerIn: parent
                     text: isActive ? "󰮯" : ""
                     color: isActive ? Colors.bg : workspace ? Colors.sf : Colors.outline
@@ -133,7 +131,6 @@ Item {
                 }
 
                 IconImage {
-                    id: wsIcon
                     anchors.centerIn: parent
                     implicitSize: dotSize - 8
                     source: wsIconName ? Quickshell.iconPath(wsIconName, true) : ""

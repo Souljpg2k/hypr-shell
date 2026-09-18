@@ -8,6 +8,6 @@ Text {
     opacity: 0.8
     font {
         family: "Material Symbols Outlined"
-        pixelSize: Appearance.base + 6
+        pixelSize: Appearance.base + 4
     }
 }

@@ -90,11 +90,11 @@ PanelWindow {
 
                             Hyprshot {}
                             HyprPicker {}
-                            WallButton {}
                             DarkModeBtn {}
                         }
                     }
                     DateTime {}
+                    WifiButton {}
                     PowerButton {}
                 }
             }

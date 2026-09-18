@@ -1,6 +1,6 @@
 pragma Singleton
 
-import QtQuick
+import QtQml
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
@@ -15,22 +15,21 @@ Singleton {
     }
 
     Process {
-        id: kbproc
+        running: true
         command: ["hyprctl", "devices", "-j"]
         stdout: StdioCollector {
             onStreamFinished: {
-                const keyboards = JSON.parse(text).keyboards
-                const keyboard = keyboards.find(k => k.main)
+                const keyboard = JSON.parse(text).keyboards.find(k => k.main)
                 if (keyboard) root.setLayout(keyboard.active_keymap)
             }
         }
     }
 
-    Component.onCompleted: {
-        kbproc.running = true
-        Hyprland.rawEvent.connect(event => {
+    Connections {
+        target: Hyprland
+        function onRawEvent(event) {
             if (event.name === "activelayout")
                 root.setLayout(event.data.split(",").pop().trim())
-        })
+        }
     }
 }

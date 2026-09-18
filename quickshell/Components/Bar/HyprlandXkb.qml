@@ -13,7 +13,7 @@ Item {
     
         MaterialIcon {
             text: "keyboard"
-            font.pixelSize: Appearance.base + 3
+            topPadding: -1
         }
 
         StyledText {

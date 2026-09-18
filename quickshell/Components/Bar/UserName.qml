@@ -15,8 +15,8 @@ Item {
         spacing: 8
 
         ClippingRectangle {
-            width: 20
-            height: 20
+            width: 22
+            height: 22
             radius: Appearance.radius
 
             Image {
@@ -35,6 +35,6 @@ Item {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked:GlobalStates.toggleUserWidgets()
+        onClicked: GlobalStates.toggleUserWidgets()
     }
 }

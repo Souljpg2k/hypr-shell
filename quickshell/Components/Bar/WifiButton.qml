@@ -1,16 +1,16 @@
-import qs
 import qs.Components
+import qs.Services
 import QtQuick
 
 StyledItem {
     MaterialIcon {
         anchors.centerIn: parent
-        text: "wallpaper"
+        text: NetworkingService.icon
     }
 
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: GlobalStates.toggleWallpaperPicker()
+        onClicked: NetworkingService.toggle()
     }
 }

@@ -1,76 +1,32 @@
 import qs
-import qs.Appearance
 import qs.Components
 import qs.Services
 import QtQuick
-import QtQuick.Layouts
 
-StyledItem {
+Item {
     width: 128
+    height: 24
 
-    Rectangle {
-        anchors {
-            right: parent.right
-            rightMargin: 14
-            verticalCenter: parent.verticalCenter
+    Row {
+        anchors.centerIn: parent
+        spacing: 4
+
+        StyledText {
+            text: DateTimeService.date
         }
-        width: 110
-        height: 24
-        color: "transparent"
-        radius: Appearance.radius
 
-        RowLayout {
-            anchors.centerIn: parent
-            spacing: 4
-
-            StyledText {
-                text: DateTimeService.date
-                leftPadding: 2
-            }
-
-            Item {
-                width: time.implicitWidth + 12
-                height: time.height
-
-                Rectangle {
-                    id: time
-                    radius: Appearance.radius
-                    height: 20
-                    implicitWidth: timeText.implicitWidth + 16
-                    color: Appearance.on_secondary
-
-                    StyledText {
-                        id: timeText
-                        text: DateTimeService.time
-                        anchors.centerIn: parent
-                        color: Colors.pf
-                        font.weight: Font.DemiBold
-                    }
-                }
-
-                Rectangle {
-                    width: 22
-                    height: 22
-                    radius: Appearance.radius
-                    color: Colors.bg
-                    anchors {
-                        right: parent.right
-                        verticalCenter: time.verticalCenter
-                        rightMargin: -5
-                    }
-
-                    StyledText {
-                        text: DateTimeService.ap
-                        anchors.centerIn: parent
-                        font.pixelSize: 10
-                    }
-                }
-            }
+        StyledText {
+            text: DateTimeService.time
         }
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: GlobalStates.toggleClock()
+        
+        StyledText {
+            text: DateTimeService.ap
         }
+    }
+
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        onClicked: GlobalStates.toggleClock()
     }
 }
