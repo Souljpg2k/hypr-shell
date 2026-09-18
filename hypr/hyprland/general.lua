@@ -33,8 +33,8 @@ hl.config({
 
         blur = {
             enabled   = true,
-            size      = 8,
-            passes    = 2,
+            size      = 10,
+            passes    = 3,
             vibrancy  = 0.5,
             contrast = 0.89,
             xray = true,

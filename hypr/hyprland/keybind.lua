@@ -7,7 +7,7 @@ local browser2    = "zen"
 
 local closeWindowBind = hl.bind("SUPER + C", hl.dsp.window.close())
 
-hl.bind("SUPER + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+hl.bind("SUPER + SHIFT + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + SHIFT + P", hl.dsp.window.pseudo())
@@ -43,7 +43,7 @@ hl.bind("SUPER + Y", hl.dsp.global("quickshell:sys"))
 hl.bind("SUPER + U", hl.dsp.global("quickshell:user"))
 hl.bind("SUPER + P", hl.dsp.global("quickshell:power"))
 hl.bind("SUPER + SHIFT + T", hl.dsp.global("quickshell:darkmode"))
-hl.bind("SUPER + K", hl.dsp.global("quickshell:mediaControls"))
+hl.bind("SUPER + M", hl.dsp.global("quickshell:mediaControls"))
 
 
 -- Move focus with SUPER + arrow keys
